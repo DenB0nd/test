@@ -39,10 +39,10 @@ void MainWindow::defineLayout()
     layout->addWidget(removeButton);
 
     //подключаем сигналы к слотам
-    connect(startButton, &QPushButton::clicked, this, MainWindow::onStartButtonClicked);
-    connect(stopButton, &QPushButton::clicked, this, MainWindow::onStopButtonClicked);
-    connect(removeButton, &QPushButton::clicked, this, MainWindow::onRemoveButtonClicked);
-    connect(spinBox, &QSpinBox::valueChanged, this, MainWindow::onSpinBoxValueChanged);
+    connect(startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
+    connect(stopButton, SIGNAL(clicked()), this, SLOT(onStopButtonClicked()));
+    connect(removeButton, SIGNAL(clicked()), this, SLOT(onRemoveButtonClicked()));
+    connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(onSpinBoxValueChanged(int)));
 }
 
 MainWindow::~MainWindow()

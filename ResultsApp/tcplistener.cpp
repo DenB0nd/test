@@ -23,8 +23,8 @@ void TcpListener::processNewConnection()
 
     tcpSocket->write("Hello, World!!! I am echo server!\r\n");
 
-    connect(tcpSocket, &QTcpSocket::readyRead, this, &TcpListener::readMessage);
-    connect(tcpSocket, &QTcpSocket::disconnected, this, &TcpListener::processClientDisconnection);
+    connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
+    connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(processClientDisconnection()));
 }
 
 void TcpListener::readMessage()

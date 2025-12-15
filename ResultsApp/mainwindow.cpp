@@ -11,7 +11,7 @@ MainWindow::MainWindow(QHostAddress address, quint16 port, QWidget *parent)
     ui->setupUi(this);
     defineLayout();
     tcpListener = new TcpListener(address, port);
-    connect(tcpListener, TcpListener::messageRecieved, this, MainWindow::updateView);
+    connect(tcpListener, SIGNAL(messageRecieved(QString)), this, SLOT(updateView(QString)));
 }
 
 MainWindow::~MainWindow()

@@ -1,5 +1,5 @@
 #include "udplistener.h"
-
+#include <QThread>
 UdpListener::UdpListener(QHostAddress address, quint16 port, QObject *parent)
     : QObject{parent}
 {
@@ -70,23 +70,22 @@ void UdpListener::startAlgorithm(int N)
     reader->moveToThread(readerThread);
 
     // связывем запуск записи с запуском потока записи
-    connect(writerThread, QThread::started, writer, Writer::process);
+    connect(writerThread, SIGNAL(started()), writer, SLOT(process()));
     // связывем чтение с добавлением записи
-    connect(writer, Writer::elementAdded, reader, Reader::process);
+    connect(writer, SIGNAL(elementAdded(int)), reader, SLOT(process(int)));
     // связываем старт алгоритма с отправкой сообшения
-    connect(writer, Writer::started, this, UdpListener::sendMessage);
-    connect(reader, Reader::started, this, UdpListener::sendMessage);
+    connect(writer, SIGNAL(started(QString)), this, SLOT(sendMessage(QString)));
+    connect(reader, SIGNAL(started(QString)), this, SLOT(sendMessage(QString)));
     // связываем окончание алгоритма с отправкой сообщения для ResultsApp
-    connect(reader, Reader::finished, this, sendMessage);
-    connect(writer, Writer::finished, this, sendMessage);
+    connect(reader, SIGNAL(finished(QString)), this, SLOT(sendMessage(QString)));
+    connect(writer, SIGNAL(finished(QString)), this, SLOT(sendMessage(QString)));
     // данные сигналы требуются для корректного завершения работы
-    connect(writer, Writer::finished, writerThread, QThread::quit);
-    connect(writerThread, QThread::finished, writerThread, QThread::deleteLater);
-    connect(reader, Reader::finished, readerThread, QThread::quit);
-    connect(readerThread, QThread::finished, readerThread, QThread::deleteLater);
-    connect(this, UdpListener::stopAlgorithm, readerThread, QThread::quit);
-    connect(this, UdpListener::stopAlgorithm, writerThread, QThread::requestInterruption);
-    connect(this, UdpListener::stopAlgorithm, writerThread, QThread::quit);
+    connect(writer, SIGNAL(finished(QString)), writerThread, SLOT(quit()));
+    connect(writerThread, SIGNAL(finished()), writerThread, SLOT(deleteLater()));
+    connect(reader, SIGNAL(finished(QString)), readerThread, SLOT(quit()));
+    connect(readerThread, SIGNAL(finished()), readerThread, SLOT(deleteLater()));
+    connect(this, SIGNAL(stopAlgorithm()), readerThread, SLOT(quit()));
+    connect(this, SIGNAL(stopAlgorithm()), writerThread, SLOT(quit()));
 
 
     // запускаем потоки

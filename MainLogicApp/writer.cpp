@@ -24,10 +24,6 @@ void Writer::process()
     // для каждого индекса генерируем случайный double
     for(int index : indeces)
     {
-        if (QThread::currentThread()->isInterruptionRequested())
-        {
-            return;
-        }
         double value = distribution(generator);
         // в данной реализации mutex не нужен потому что считывающий поток читает значение всегда после записывающего
         // и каждый раз новый элемент добавляется в уникальную ячейку контейнера

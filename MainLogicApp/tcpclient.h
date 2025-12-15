@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QTcpSocket>
-
+#include <QHostAddress>
 
 class TcpClient : public QObject
 {
@@ -13,6 +13,8 @@ public:
     void sendMessage(QString message);
 private:
     QTcpSocket* socket;
+    QHostAddress address;
+    quint16 port;
 };
 
 #endif // TCPCLIENT_H
