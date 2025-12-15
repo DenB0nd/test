@@ -10,6 +10,7 @@
 #include <numeric>
 #include <random>
 
+// класс, отвечающий за запись элементов в контейнер
 class Writer : public QObject
 {
     Q_OBJECT
@@ -25,9 +26,11 @@ public slots:
     void process();
 
 signals:
+    // события начала и конца, требуются для отправки сообщений к ResultsApp
     void started(QString message);
-    void elementAdded(int index);
     void finished(QString message);
+    // событие добавление элемента, требуется для обработки в Reader
+    void elementAdded(int index);
 
 private:
     std::shared_ptr<std::vector<double>> container;

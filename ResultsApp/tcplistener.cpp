@@ -11,17 +11,15 @@ TcpListener::TcpListener(QHostAddress address, quint16 port, QObject *parent)
     connect(tcpServer, &QTcpServer::newConnection, this, &TcpListener::processNewConnection);
 
     if(!tcpServer->listen(address, port)){
-        qDebug() << "server is not started";
+        qDebug() << "Сервер не запущен";
     } else {
-        qDebug() << "server is started";
+        qDebug() << "Сервер запущен";
     }
 }
 
 void TcpListener::processNewConnection()
 {
     tcpSocket = tcpServer->nextPendingConnection();
-
-    tcpSocket->write("Hello, World!!! I am echo server!\r\n");
 
     connect(tcpSocket, SIGNAL(readyRead()), this, SLOT(readMessage()));
     connect(tcpSocket, SIGNAL(disconnected()), this, SLOT(processClientDisconnection()));

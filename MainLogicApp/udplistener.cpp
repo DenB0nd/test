@@ -26,7 +26,7 @@ void UdpListener::readPendingDatagrams()
     processMessage(message);
 }
 
-// обрабатываем сообщение
+// обрабатываем сообщение, определяем дальнейшие действия
 void UdpListener::processMessage(QString message)
 {
     QStringList tokens = message.split(":");

@@ -5,6 +5,7 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 
+// сервис, отвечающий за общение ResultsApp и MainLogicApp (сервер)
 class TcpListener : public QObject
 {
     Q_OBJECT

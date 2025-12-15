@@ -14,6 +14,7 @@
 #include <vector>
 #include <memory>
 
+// класс, отвечающий за реагирование на сообщение от SettingsApp
 class UdpListener : public QObject
 {
     Q_OBJECT

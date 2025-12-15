@@ -11,11 +11,11 @@ MainWindow::MainWindow(QHostAddress address, quint16 port, QWidget *parent)
     loadSettings();
 }
 
-// устанавливаем лейаут приложения
+
 void MainWindow::defineLayout()
 {
     setWindowTitle("Settings");
-
+    // устанавливаем лейаут приложения
     QWidget *centralWidget = new QWidget(this);
     setCentralWidget(centralWidget);
 
@@ -38,10 +38,11 @@ void MainWindow::defineLayout()
     layout->addWidget(stopButton);
     layout->addWidget(removeButton);
 
-    //подключаем сигналы к слотам
+    // связываем нажатия на кнопки с отправкой сообщения по UDP
     connect(startButton, SIGNAL(clicked()), this, SLOT(onStartButtonClicked()));
     connect(stopButton, SIGNAL(clicked()), this, SLOT(onStopButtonClicked()));
     connect(removeButton, SIGNAL(clicked()), this, SLOT(onRemoveButtonClicked()));
+    // связываем изменение значения N с сохранением его в QSetting
     connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(onSpinBoxValueChanged(int)));
 }
 

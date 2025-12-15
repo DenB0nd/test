@@ -4,6 +4,7 @@
 #include <QUdpSocket>
 #include <QDebug>
 
+// сервис, отвечающий за общение SettingsApp с MainLogicApp по UDP
 class UdpService : public QObject {
     Q_OBJECT
 

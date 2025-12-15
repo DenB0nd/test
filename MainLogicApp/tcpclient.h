@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QHostAddress>
 
+// класс, отвечающий за общений MainLogicApp и ResultsApp по Tcp (клиент)
 class TcpClient : public QObject
 {
     Q_OBJECT

@@ -10,6 +10,7 @@
 #include <random>
 #include <chrono>
 
+// класс отвечающй за чтение элемента и контейнера
 class Reader : public QObject
 {
     Q_OBJECT
@@ -25,6 +26,7 @@ public slots:
     void process(int index);
 
 signals:
+    // события начала и конца, требуются для отправки сообщений к ResultsApp
     void started(QString message);
     void finished(QString message);
 
